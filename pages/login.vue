@@ -44,6 +44,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+ middleware: ['guest']
+})
 const isLoading = ref(false)
 
 const email = ref('')
@@ -68,6 +71,14 @@ async function login() {
         password: password.value,
       },
     })
+
+// set data local storate
+  const user = await $apiFetch('/api/user')
+
+  const { setUser } = useAuth()
+
+  setUser(user.name)
+
     window.location.href = '/my-info'
   } catch (error) {
     isLoading.value = false

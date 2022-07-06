@@ -64,6 +64,12 @@
 
 <script setup>
 
+definePageMeta({
+  middleware: ['guest']
+  // or middleware: 'auth'
+})
+
+
 const isLoading = ref(false)
 
 const name = ref('')
@@ -85,7 +91,7 @@ async function register() {
   isLoading.value = true
   await csrf()
   try {
-    await $apiFetch('/register', {
+   await $apiFetch('/register', {
       method: 'POST',
       body: {
         name: name.value,
@@ -94,6 +100,10 @@ async function register() {
         password_confirmation: password_confirmation.value
       },
     })
+
+    const user = await $apiFetch('/api/user')
+    const { setUser } = useAuth()
+    setUser(user.name)
     alert('Successfully registered')
     window.location.href = '/my-info'
   } catch (error) {
