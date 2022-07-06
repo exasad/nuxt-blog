@@ -15,6 +15,11 @@
             class="text-blue-600 hover:underline"
             :to="`/posts/${post.id}`"
             >{{ post.title }}</NuxtLink
+          > &mid;
+          <NuxtLink
+            class="text-blue-600 hover:underline"
+            :to="`/posts/${post.id}/edit`"
+            >Edit</NuxtLink
           >
         </li>
       </ul>
